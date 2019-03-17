@@ -25,7 +25,7 @@ net = cv2.dnn.readNetFromCaffe('MobileNetSSD_deploy.prototxt.txt', 'MobileNetSSD
 # initialize the video stream, allow the cammera sensor to warmup,
 # and initialize the FPS counter
 print("[INFO] starting video stream...")
-vs = VideoStream(src=0).start()
+vs = VideoStream('1.mp4').start()
 time.sleep(2.0)
 fps = FPS().start()
 
@@ -42,6 +42,8 @@ while True:
 	# grab the frame from the threaded video stream and resize it
 	# to have a maximum width of 400 pixels
 	frame = vs.read()
+	if frame is None:
+		continue
 	frame = imutils.resize(frame, width=400)
 
 	# grab the frame dimensions and convert it to a blob

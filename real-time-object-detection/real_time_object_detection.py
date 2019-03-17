@@ -35,15 +35,17 @@ net = cv2.dnn.readNetFromCaffe(args["prototxt"], args["model"])
 # initialize the video stream, allow the cammera sensor to warmup,
 # and initialize the FPS counter
 print("[INFO] starting video stream...")
-vs = VideoStream(src=0).start()
-time.sleep(2.0)
-fps = FPS().start()
+vs = cv2.VideoCapture('1.mp4')
+# time.sleep(2.0)
+# fps = FPS().start()
 
 # loop over the frames from the video stream
 while True:
 	# grab the frame from the threaded video stream and resize it
 	# to have a maximum width of 400 pixels
-	frame = vs.read()
+	ret, frame = vs.read()
+	if frame is None:
+		break
 	frame = imutils.resize(frame, width=400)
 
 	# grab the frame dimensions and convert it to a blob
@@ -90,12 +92,12 @@ while True:
 		break
 
 	# update the FPS counter
-	fps.update()
+	# fps.update()
 
 # stop the timer and display FPS information
-fps.stop()
-print("[INFO] elapsed time: {:.2f}".format(fps.elapsed()))
-print("[INFO] approx. FPS: {:.2f}".format(fps.fps()))
+# fps.stop()
+# print("[INFO] elapsed time: {:.2f}".format(fps.elapsed()))
+# print("[INFO] approx. FPS: {:.2f}".format(fps.fps()))
 
 # do a bit of cleanup
 cv2.destroyAllWindows()
